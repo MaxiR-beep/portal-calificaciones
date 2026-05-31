@@ -19,23 +19,17 @@ export default function LoginPage() {
 
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
-    console.log('error:', error)
-    console.log('data:', data)
-
-    if (error) {
-      setError('Email o contraseña incorrectos. ' + error.message)
+    if (error || !data.user) {
+      setError('Email o contraseña incorrectos.')
       setLoading(false)
       return
     }
 
-    const { data: profile, error: profileError } = await supabase
+    const { data: profile } = await supabase
       .from('profiles')
       .select('rol')
       .eq('user_id', data.user.id)
       .single()
-
-    console.log('profile:', profile)
-    console.log('profileError:', profileError)
 
     if (profile?.rol === 'docente') {
       router.push('/docente')
