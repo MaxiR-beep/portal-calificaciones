@@ -43,7 +43,7 @@ export default function LoginPage() {
     <main className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 w-full max-w-sm">
         <div className="mb-6">
-          <h1 className="text-xl font-medium text-gray-900">Portal de calificaciones</h1>
+          <h1 className="text-xl font-medium text-gray-900">Calificaciones de Práctica Profesionalizante II</h1>
           <p className="text-sm text-gray-500 mt-1">Ingresá con tu cuenta institucional</p>
         </div>
 
