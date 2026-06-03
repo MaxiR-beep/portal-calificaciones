@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 
 export default function LoginPage() {
   const router = useRouter()
-  const supabase = createClient()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -17,6 +17,7 @@ export default function LoginPage() {
     setLoading(true)
     setError('')
 
+    const supabase = createClient()
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error || !data.user) {
@@ -83,6 +84,20 @@ export default function LoginPage() {
             {loading ? 'Ingresando...' : 'Ingresar'}
           </button>
         </form>
+
+        <div className="mt-6 space-y-2 text-center text-sm">
+          <div>
+            <Link href="/recuperar" className="text-indigo-600 hover:text-indigo-700">
+              ¿Olvidaste tu contraseña?
+            </Link>
+          </div>
+          <div className="text-gray-500">
+            ¿No tenés cuenta?{' '}
+            <Link href="/registro" className="text-indigo-600 hover:text-indigo-700">
+              Registrate
+            </Link>
+          </div>
+        </div>
       </div>
     </main>
   )
