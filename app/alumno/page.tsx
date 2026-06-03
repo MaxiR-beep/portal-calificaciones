@@ -85,12 +85,17 @@ export default function AlumnoPage() {
             <div className="space-y-4">
               {calificaciones.map((c) => (
                 <div key={c.id} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-gray-900">{c.materias.nombre}</span>
-                    <span className="text-sm font-semibold text-indigo-600">{c.nota}/10</span>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <span className="text-sm font-medium text-gray-900">{c.materias.nombre}</span>
+                      {c.actividad && (
+                        <p className="text-xs text-gray-500 mt-0.5">{c.actividad}</p>
+                      )}
+                    </div>
+                    <span className="text-sm font-semibold text-indigo-600 shrink-0 ml-4">{c.nota}/10</span>
                   </div>
                   {c.observacion && (
-                    <p className="text-sm text-gray-500 mt-1">{c.observacion}</p>
+                    <p className="text-sm text-gray-500 mt-2">{c.observacion}</p>
                   )}
                   <p className="text-xs text-gray-400 mt-1">Período: {c.periodo}</p>
                 </div>
