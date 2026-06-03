@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase'
 
 export default function ActualizarPasswordPage() {
   const router = useRouter()
+  const supabase = createClient()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
@@ -13,12 +14,18 @@ export default function ActualizarPasswordPage() {
   const [recuperando, setRecuperando] = useState(true)
 
   useEffect(() => {
-    const supabase = createClient()
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'PASSWORD_RECOVERY') {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
         setRecuperando(false)
       }
     })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
+        setRecuperando(false)
+      }
+    })
+
     return () => subscription?.unsubscribe()
   }, [])
 
@@ -39,7 +46,6 @@ export default function ActualizarPasswordPage() {
       return
     }
 
-    const supabase = createClient()
     const { error: updateError } = await supabase.auth.updateUser({ password })
 
     if (updateError) {
